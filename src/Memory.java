@@ -9,12 +9,13 @@ public class Memory
     public Memory()
     {
         scanner = new Scanner(System.in);
+        players = new Player[2];
 
         System.out.print("Enter player 1's name: ");
         String player1 = scanner.nextLine();
         players[0] = new Player(player1);
 
-        System.out.println("Enter player 2's name: ");
+        System.out.print("Enter player 2's name: ");
         String player2 = scanner.nextLine();
         players[1] = new Player(player2);
 
@@ -33,7 +34,14 @@ public class Memory
         {
             cards = 8;
         }
+
         cardArea = new CardArea(cards);
         cardArea.layoutCardArea();
+        run();
+    }
+
+    public void run()
+    {
+        System.out.println("Hi");
     }
 }

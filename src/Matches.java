@@ -1,22 +1,47 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Matches
 {
     private ArrayList<int[]> matchList;
-    private int matchPairs;
+    private int cards;
 
     public Matches(int cards)
     {
-        matchPairs = cards * cards / 2;
-        ArrayList<Integer> idx = new ArrayList<Integer>();
-
-        for (int i = 0; i < matchPairs; i++)
-        {
-            idx.add(i);
-        }
-
+        this.cards = cards;
         matchList = new ArrayList<int[]>();
+        for (int i = 0; i < cards; i++)
+        {
+            for (int j = -1; j < cards - 1; j++)
+            {
+                int[] match = new int[2];
+                match[0] = i;
+                match[1] = j + 1;
+                matchList.add(match);
+            }
+        }
+        makeMatches();
+    }
 
+    public ArrayList<int[]> getMatchList()
+    {
+        return matchList;
+    }
+    public void makeMatches()
+    {
+        /*
+        for (int[] arr : matchList)
+        {
+            System.out.print("[ ");
+            for (int num : arr)
+            {
+                System.out.print(num + " ");
+            }
+            System.out.print("]");
+        }
+         */
+        /*
+        int pair = 1;
         for (int i = 0; i < matchPairs; i++)
         {
             int rand1 = 0;
@@ -28,17 +53,16 @@ public class Matches
                 rand2 = (int) (Math.random() * matchPairs);
             }
 
-            for (int j = 0; j < idx.size(); j++)
+            for (int j = 0; j < matchList.size(); j++)
             {
-                if (idx.get(j) == rand1 || idx.get(j) == rand2)
+                if (matchList.get(j)[j] == rand1 || matchList.get(j)[j] == rand2)
                 {
-                    idx.remove(j);
-                    j--;
+                    int[] match = matchList.get(j);
+                    match[0] = pair;
+                    pair++;
                 }
             }
-            matchList.add(new int{})
         }
-
-        for (int i = 0; i < )
+         */
     }
 }
