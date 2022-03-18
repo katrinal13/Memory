@@ -2,28 +2,52 @@ import java.util.ArrayList;
 
 public class CardArea
 {
-    private ArrayList<int[]> matchList;
     private int cards;
-    private int[][] cardArea;
-    private int[][] playArea;
+    private String[][] cardArea;
+    private String[][] playArea;
+    private ArrayList<int[]> matchList;
+    private boolean match;
+    private Card card1;
+    private Card card2;
 
-    public CardArea(int cards)
+    public CardArea(int cards, ArrayList<int[]> matchList)
     {
         this.cards = cards;
-        cardArea = new int[cards][cards];
-        playArea = new int[cards][cards];
-        matchList = new ArrayList<int[]>();
-        for (int i = 0; i < cards; i++)
+        cardArea = new String[cards][cards];
+        playArea = new String[cards][cards];
+        match = false;
+        this.matchList = matchList;
+        makeMatches();
+    }
+
+    public String[][] getCardArea()
+    {
+        return cardArea;
+    }
+
+    public String[][] getPlayArea()
+    {
+        return playArea;
+    }
+
+    public boolean isMatch()
+    {
+        return match;
+    }
+
+    public boolean isEmpty()
+    {
+        for (String[] row: playArea)
         {
-            for (int j = -1; j < cards - 1; j++)
+            for (String element : row)
             {
-                int[] match = new int[2];
-                match[0] = i;
-                match[1] = j + 1;
-                matchList.add(match);
+                if (!element.equals(" "))
+                {
+                    return false;
+                }
             }
         }
-        makeMatches();
+        return true;
     }
 
     public void makeMatches()
@@ -56,8 +80,8 @@ public class CardArea
                 rand2 = (int) (Math.random() * matchList.size());
             }
 
-            cardArea[matchList.get(rand1)[0]][matchList.get(rand1)[1]] = pair;
-            cardArea[matchList.get(rand2)[0]][matchList.get(rand2)[1]] = pair;
+            cardArea[matchList.get(rand1)[0]][matchList.get(rand1)[1]] = "" + pair;
+            cardArea[matchList.get(rand2)[0]][matchList.get(rand2)[1]] = "" + pair;
             if (rand1 > rand2)
             {
                 matchList.remove(rand1);
@@ -71,21 +95,14 @@ public class CardArea
             pair++;
         }
 
-        int idx = 1;
-        for (int row = 0; row < playArea.length; row++)
-        {
-            for (int col = 0; col < playArea[0].length; col++)
-            {
-                playArea[row][col] = idx;
-                idx++;
-            }
-        }
+        playArea = copyArr(playArea);
+
         drawArea(playArea);
         System.out.println();
         drawArea(cardArea);
     }
 
-    public void drawArea(int[][] array)
+    public void drawArea(String[][] array)
     {
         for (int row = 0; row < array.length; row++)
         {
@@ -98,7 +115,7 @@ public class CardArea
             }
             for (int col = 0; col < array[0].length; col++)
             {
-                if (array[row][col] % 10 == array[row][col])
+                if (array[row][col].length() == 1)
                 {
                     System.out.print(" ");
                 }
@@ -113,9 +130,39 @@ public class CardArea
         }
     }
 
-    private void clearScreen()
+    public int[] recordFlip(String choice, Player player)
     {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
+        int[] set = new int[2];
+
+        for (int row = 0; row < playArea.length; row++)
+        {
+            for (int col = 0; col < playArea[0].length; col++)
+            {
+                if (playArea[row][col].equals(choice))
+                {
+                    set[0] = row;
+                    set[1] = col;
+                }
+            }
+        }
+
+        playArea[set[0]][set[1]] = cardArea[set[0]][set[1]];
+        drawArea(playArea);
+
+        return set;
+    }
+
+    private String[][] copyArr(String[][] array)
+    {
+        int idx = 1;
+        for (int row = 0; row < array.length; row++)
+        {
+            for (int col = 0; col < array[0].length; col++)
+            {
+                array[row][col] = "" + idx;
+                idx++;
+            }
+        }
+        return array;
     }
 }
