@@ -52,7 +52,7 @@ public class Memory
         {
             for (int i = 0; i < players.length; i++)
             {
-                takeTurn(players[i]);
+                printScore();
                 if (takeTurn(players[i]))
                 {
                     gameOver = true;
@@ -61,39 +61,75 @@ public class Memory
             }
         }
         System.out.println("Thanks for playing!");
+        printScore();
+
+        Player winner = players[0];
+        for (int i = 0; i < players.length; i++)
+        {
+            if (players[i].getScore() > winner.getScore())
+            {
+                winner = players[i];
+            }
+            System.out.println(winner.getName() + " won the Memory game with " + winner.getScore() + " matches!");
+        }
     }
+
+     public void printScore()
+     {
+         System.out.println("----------- SCORE BOARD -----------");
+         System.out.println(players[0].getName() + ": " + players[0].getScore());
+         System.out.println(players[1].getName() + ": " + players[1].getScore());
+         System.out.println();
+     }
 
     public boolean takeTurn(Player player)
     {
-        boolean selectedValidSpace = false;
-        while (!selectedValidSpace)
-        {
-            System.out.print("Player " + player.getName() + ", Choose a card: ");
-            String choice = scanner.nextLine();
-            card1 = new Card(cardArea.getCardArea(), cardArea.getPlayArea(), cardArea.recordFlip(choice, player), choice);
-            selectedValidSpace = card1.selectedValidSpace();
-        }
+        int[] selectedValidSpace;
+        boolean isMatch = true;
+        String choice = "";
+        String choice2 = "";
+        cardArea.drawArea();
 
-        while (!selectedValidSpace)
+        while (isMatch)
         {
-            System.out.print("Choose another card: ");
-            String choice2 = scanner.nextLine();
-            card2 = new Card(cardArea.getCardArea(), cardArea.getPlayArea(), cardArea.recordFlip(choice2, player), choice2);
-            selectedValidSpace = card2.selectedValidSpace();
-        }
+            selectedValidSpace = null;
+            while (selectedValidSpace == null)
+            {
+                System.out.print("Player " + player.getName() + ", Choose a card: ");
+                choice = scanner.nextLine();
+                selectedValidSpace = cardArea.recordFlip(choice);
+            }
+            card1 = new Card(cardArea.getCardArea(), cardArea.getPlayArea(), selectedValidSpace, choice);
 
-        card1.checkMatch(card2);
+            selectedValidSpace = null;
+            while (selectedValidSpace == null)
+            {
+                System.out.print("Choose another card: ");
+                choice2 = scanner.nextLine();
+                selectedValidSpace = cardArea.recordFlip(choice2);
+            }
+            card2 = new Card(cardArea.getCardArea(), cardArea.getPlayArea(), selectedValidSpace, choice2);
 
-        if (cardArea.isMatch())
-        {
-            player.incrementScore();
+            isMatch = card1.checkMatch(card2);
+
+            if (isMatch)
+            {
+                cardArea.drawArea();
+                player.incrementScore();
+            }
+            else
+            {
+                isMatch = false;
+                cardArea.drawArea();
+                System.out.println();
+            }
         }
         return cardArea.isEmpty();
     }
 
     private void clearScreen()
     {
-        System.out.print("\033[H\033[2J");
+        System.out.print("\\033[H\\033[2J");
         System.out.flush();
     }
 }

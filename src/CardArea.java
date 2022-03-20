@@ -6,7 +6,6 @@ public class CardArea
     private String[][] cardArea;
     private String[][] playArea;
     private ArrayList<int[]> matchList;
-    private boolean match;
     private Card card1;
     private Card card2;
 
@@ -15,7 +14,6 @@ public class CardArea
         this.cards = cards;
         cardArea = new String[cards][cards];
         playArea = new String[cards][cards];
-        match = false;
         this.matchList = matchList;
         makeMatches();
     }
@@ -28,11 +26,6 @@ public class CardArea
     public String[][] getPlayArea()
     {
         return playArea;
-    }
-
-    public boolean isMatch()
-    {
-        return match;
     }
 
     public boolean isEmpty()
@@ -97,14 +90,14 @@ public class CardArea
 
         playArea = copyArr(playArea);
 
-        drawArea(playArea);
+        drawArea();
         System.out.println();
-        drawArea(cardArea);
+        drawCArea();
     }
 
-    public void drawArea(String[][] array)
+    public void drawArea()
     {
-        for (int row = 0; row < array.length; row++)
+        for (int row = 0; row < playArea.length; row++)
         {
             String dashes = "";
             int dashesAmt = cards * 3;
@@ -113,13 +106,13 @@ public class CardArea
             {
                 dashes += "-";
             }
-            for (int col = 0; col < array[0].length; col++)
+            for (int col = 0; col < playArea[0].length; col++)
             {
-                if (array[row][col].length() == 1)
+                if (playArea[row][col].length() == 1)
                 {
                     System.out.print(" ");
                 }
-                System.out.print(array[row][col]);
+                System.out.print(playArea[row][col]);
                 if (col != cards - 1)
                 {
                     System.out.print("|");
@@ -130,10 +123,37 @@ public class CardArea
         }
     }
 
-    public int[] recordFlip(String choice, Player player)
+    public void drawCArea()
+    {
+        for (int row = 0; row < cardArea.length; row++)
+        {
+            String dashes = "";
+            int dashesAmt = cards * 3;
+
+            for (int i = 0; i < dashesAmt - 1; i++)
+            {
+                dashes += "-";
+            }
+            for (int col = 0; col < cardArea[0].length; col++)
+            {
+                if (cardArea[row][col].length() == 1)
+                {
+                    System.out.print(" ");
+                }
+                System.out.print(cardArea[row][col]);
+                if (col != cards - 1)
+                {
+                    System.out.print("|");
+                }
+            }
+            System.out.println();
+            System.out.println(dashes);
+        }
+    }
+
+    public int[] recordFlip(String choice)
     {
         int[] set = new int[2];
-
         for (int row = 0; row < playArea.length; row++)
         {
             for (int col = 0; col < playArea[0].length; col++)
@@ -145,10 +165,16 @@ public class CardArea
                 }
             }
         }
-
-        playArea[set[0]][set[1]] = cardArea[set[0]][set[1]];
-        drawArea(playArea);
-
+        if (!playArea[set[0]][set[1]].equals(" "))
+        {
+            playArea[set[0]][set[1]] = cardArea[set[0]][set[1]];
+            drawArea();
+            System.out.println();
+        }
+        else
+        {
+            set = null;
+        }
         return set;
     }
 

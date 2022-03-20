@@ -32,15 +32,12 @@ public class Card
             playArea[card2.getSet()[0]][card2.getSet()[1]] = " ";
             isMatch = true;
         }
-        return isMatch;
-    }
-
-    public boolean selectedValidSpace()
-    {
-        if (!playArea[set[0]][set[1]].equals(" "))
+        else
         {
-            return true;
+
+            playArea[this.set[0]][this.set[1]] = this.getChoice();
+            playArea[card2.getSet()[0]][card2.getSet()[1]] = card2.getChoice();
         }
-        return false;
+        return isMatch;
     }
 }
