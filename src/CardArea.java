@@ -165,6 +165,7 @@ public class CardArea
                 }
             }
         }
+
         if (!playArea[set[0]][set[1]].equals(" "))
         {
             playArea[set[0]][set[1]] = cardArea[set[0]][set[1]];
@@ -175,6 +176,7 @@ public class CardArea
         {
             set = null;
         }
+
         return set;
     }
 

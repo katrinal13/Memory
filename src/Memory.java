@@ -84,7 +84,7 @@ public class Memory
 
     public boolean takeTurn(Player player)
     {
-        int[] selectedValidSpace;
+        int[] validSet;
         boolean isMatch = true;
         String choice = "";
         String choice2 = "";
@@ -92,23 +92,23 @@ public class Memory
 
         while (isMatch)
         {
-            selectedValidSpace = null;
-            while (selectedValidSpace == null)
+            validSet = null;
+            while (validSet == null)
             {
                 System.out.print("Player " + player.getName() + ", Choose a card: ");
                 choice = scanner.nextLine();
-                selectedValidSpace = cardArea.recordFlip(choice);
+                validSet = cardArea.recordFlip(choice);
             }
-            card1 = new Card(cardArea.getCardArea(), cardArea.getPlayArea(), selectedValidSpace, choice);
+            card1 = new Card(cardArea.getCardArea(), cardArea.getPlayArea(), validSet, choice);
 
-            selectedValidSpace = null;
-            while (selectedValidSpace == null)
+            validSet = null;
+            while (validSet == null)
             {
                 System.out.print("Choose another card: ");
                 choice2 = scanner.nextLine();
-                selectedValidSpace = cardArea.recordFlip(choice2);
+                validSet = cardArea.recordFlip(choice2);
             }
-            card2 = new Card(cardArea.getCardArea(), cardArea.getPlayArea(), selectedValidSpace, choice2);
+            card2 = new Card(cardArea.getCardArea(), cardArea.getPlayArea(), validSet, choice2);
 
             isMatch = card1.checkMatch(card2);
 
