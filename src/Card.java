@@ -1,14 +1,12 @@
 public class Card
 {
     private String[][] cardArea;
-    private String[][] playArea;
     private int[] set;
     private String choice;
 
-    public Card(String[][] cardArea, String[][] playArea, int[] set, String choice)
+    public Card(String[][] cardArea, int[] set, String choice)
     {
         this.cardArea = cardArea;
-        this.playArea = playArea;
         this.set = set;
         this.choice = choice;
     }
@@ -28,15 +26,14 @@ public class Card
         boolean isMatch = false;
         if (cardArea[this.set[0]][this.set[1]].equals(cardArea[card2.getSet()[0]][card2.getSet()[1]]))
         {
-            playArea[this.set[0]][this.set[1]] = " ";
-            playArea[card2.getSet()[0]][card2.getSet()[1]] = " ";
+            CardArea.playArea[this.set[0]][this.set[1]] = " ";
+            CardArea.playArea[card2.getSet()[0]][card2.getSet()[1]] = " ";
             isMatch = true;
         }
         else
         {
-
-            playArea[this.set[0]][this.set[1]] = this.getChoice();
-            playArea[card2.getSet()[0]][card2.getSet()[1]] = card2.getChoice();
+            CardArea.playArea[this.set[0]][this.set[1]] = this.getChoice();
+            CardArea.playArea[card2.getSet()[0]][card2.getSet()[1]] = card2.getChoice();
         }
         return isMatch;
     }

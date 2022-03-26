@@ -55,8 +55,6 @@ public class Memory
                 printScore();
                 takeTurn(players[i]);
 
-                System.out.println(cardArea.isEmpty());
-
                 if (cardArea.isEmpty())
                 {
                     gameOver = true;
@@ -64,6 +62,7 @@ public class Memory
                 }
             }
         }
+
         System.out.println("Thanks for playing!");
         printScore();
 
@@ -103,7 +102,7 @@ public class Memory
                 choice = scanner.nextLine();
                 validSet = cardArea.recordFlip(choice);
             }
-            card1 = new Card(cardArea.getCardArea(), cardArea.getPlayArea(), validSet, choice);
+            card1 = new Card(cardArea.getCardArea(), validSet, choice);
 
             validSet = null;
             while (validSet == null)
@@ -112,7 +111,7 @@ public class Memory
                 choice2 = scanner.nextLine();
                 validSet = cardArea.recordFlip(choice2);
             }
-            card2 = new Card(cardArea.getCardArea(), cardArea.getPlayArea(), validSet, choice2);
+            card2 = new Card(cardArea.getCardArea(), validSet, choice2);
 
             isMatch = card1.checkMatch(card2);
 

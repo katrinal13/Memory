@@ -2,9 +2,9 @@ import java.util.ArrayList;
 
 public class CardArea
 {
+    public static String[][] playArea;
     private int cards;
     private String[][] cardArea;
-    private String[][] playArea;
     private String[] emojis;
     private ArrayList<int[]> matchList;
     private Card card1;
@@ -26,11 +26,6 @@ public class CardArea
     public String[][] getCardArea()
     {
         return cardArea;
-    }
-
-    public String[][] getPlayArea()
-    {
-        return playArea;
     }
 
     public boolean isEmpty()
