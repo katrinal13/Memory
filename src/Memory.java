@@ -53,7 +53,11 @@ public class Memory
             for (int i = 0; i < players.length; i++)
             {
                 printScore();
-                if (takeTurn(players[i]))
+                takeTurn(players[i]);
+
+                System.out.println(cardArea.isEmpty());
+
+                if (cardArea.isEmpty())
                 {
                     gameOver = true;
                     break;
@@ -70,8 +74,8 @@ public class Memory
             {
                 winner = players[i];
             }
-            System.out.println(winner.getName() + " won the Memory game with " + winner.getScore() + " matches!");
         }
+        System.out.println(winner.getName() + " won the Memory game with " + winner.getScore() + " matches!");
     }
 
      public void printScore()
@@ -82,7 +86,7 @@ public class Memory
          System.out.println();
      }
 
-    public boolean takeTurn(Player player)
+    public void takeTurn(Player player)
     {
         int[] validSet;
         boolean isMatch = true;
@@ -90,7 +94,7 @@ public class Memory
         String choice2 = "";
         cardArea.drawArea();
 
-        while (isMatch)
+        while (isMatch && !cardArea.isEmpty())
         {
             validSet = null;
             while (validSet == null)
@@ -124,7 +128,6 @@ public class Memory
                 System.out.println();
             }
         }
-        return cardArea.isEmpty();
     }
 
     private void clearScreen()
