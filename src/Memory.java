@@ -1,15 +1,13 @@
 import java.util.Scanner;
 
-public class Memory
-{
+public class Memory {
     private Player[] players;
     private CardArea cardArea;
     private Scanner scanner;
     private Card card1;
     private Card card2;
 
-    public Memory()
-    {
+    public Memory() {
         scanner = new Scanner(System.in);
         players = new Player[2];
         card1 = null;
@@ -27,16 +25,11 @@ public class Memory
         int cards = scanner.nextInt();
         scanner.nextLine();
 
-        if (cards == 1)
-        {
+        if (cards == 1) {
             cards = 4;
-        }
-        else if (cards == 2)
-        {
+        } else if (cards == 2) {
             cards = 6;
-        }
-        else
-        {
+        } else {
             cards = 8;
         }
         WinCondition wins = new WinCondition(cards);
@@ -45,18 +38,13 @@ public class Memory
         run();
     }
 
-    public void run()
-    {
+    public void run() {
         boolean gameOver = false;
-        while (!gameOver)
-        {
-            for (int i = 0; i < players.length; i++)
-            {
+        while (!gameOver) {
+            for (int i = 0; i < players.length; i++) {
                 printScore();
                 takeTurn(players[i]);
-
-                if (cardArea.isEmpty())
-                {
+                if (cardArea.isEmpty()) {
                     gameOver = true;
                     break;
                 }
@@ -67,23 +55,20 @@ public class Memory
         printScore();
 
         Player winner = players[0];
-        for (int i = 0; i < players.length; i++)
-        {
-            if (players[i].getScore() > winner.getScore())
-            {
+        for (int i = 0; i < players.length; i++) {
+            if (players[i].getScore() > winner.getScore()) {
                 winner = players[i];
             }
         }
         System.out.println(winner.getName() + " won the Memory game with " + winner.getScore() + " matches!");
     }
 
-     public void printScore()
-     {
-         System.out.println("----------- SCORE BOARD -----------");
-         System.out.println(players[0].getName() + ": " + players[0].getScore());
-         System.out.println(players[1].getName() + ": " + players[1].getScore());
-         System.out.println();
-     }
+    public void printScore() {
+        System.out.println("----------- SCORE BOARD -----------");
+        System.out.println(players[0].getName() + ": " + players[0].getScore());
+        System.out.println(players[1].getName() + ": " + players[1].getScore());
+        System.out.println();
+    }
 
     public void takeTurn(Player player)
     {
@@ -91,16 +76,19 @@ public class Memory
         boolean isMatch = true;
         String choice = "";
         String choice2 = "";
-        cardArea.drawArea();
 
         while (isMatch && !cardArea.isEmpty())
         {
+            clearConsole();
+            cardArea.drawArea();
+            System.out.println();
             validSet = null;
             while (validSet == null)
             {
                 System.out.print("Player " + player.getName() + ", Choose a card: ");
                 choice = scanner.nextLine();
                 validSet = cardArea.recordFlip(choice);
+                cardArea.drawArea();
             }
             card1 = new Card(cardArea.getCardArea(), validSet, choice);
 
@@ -110,6 +98,17 @@ public class Memory
                 System.out.print("Choose another card: ");
                 choice2 = scanner.nextLine();
                 validSet = cardArea.recordFlip(choice2);
+
+                try
+                {
+                    cardArea.drawArea();
+                    System.out.println();
+                    Thread.sleep(2500);
+                }
+                catch(InterruptedException ex)
+                {
+                    Thread.currentThread().interrupt();
+                }
             }
             card2 = new Card(cardArea.getCardArea(), validSet, choice2);
 
@@ -123,15 +122,12 @@ public class Memory
             else
             {
                 isMatch = false;
-                cardArea.drawArea();
                 System.out.println();
             }
         }
     }
 
-    private void clearScreen()
-    {
-        System.out.print("\\033[H\\033[2J");
-        System.out.flush();
+    public static void clearConsole() {
+        System.out.println(System.lineSeparator().repeat(50));
     }
 }
