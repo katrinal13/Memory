@@ -7,7 +7,8 @@ public class Memory {
     private Card card1;
     private Card card2;
 
-    public Memory() {
+    public Memory()
+    {
         scanner = new Scanner(System.in);
         players = new Player[2];
         card1 = null;
@@ -35,32 +36,27 @@ public class Memory {
         WinCondition wins = new WinCondition(cards);
         cardArea = new CardArea(cards, wins.getMatchList());
         cardArea.layoutCardArea();
-        run();
     }
 
-    public void run() {
+    public void run()
+    {
         boolean gameOver = false;
-        while (!gameOver) {
-            for (int i = 0; i < players.length; i++) {
-                printScore();
-                takeTurn(players[i]);
-                if (cardArea.isEmpty()) {
+        while (!gameOver)
+        {
+            for (Player player : players)
+            {
+                takeTurn(player);
+                if (cardArea.isEmpty())
+                {
                     gameOver = true;
                     break;
                 }
             }
         }
 
+        System.out.println();
+        System.out.println(winner());
         System.out.println("Thanks for playing!");
-        printScore();
-
-        Player winner = players[0];
-        for (int i = 0; i < players.length; i++) {
-            if (players[i].getScore() > winner.getScore()) {
-                winner = players[i];
-            }
-        }
-        System.out.println(winner.getName() + " won the Memory game with " + winner.getScore() + " matches!");
     }
 
     public void printScore() {
@@ -80,6 +76,7 @@ public class Memory {
         while (isMatch && !cardArea.isEmpty())
         {
             clearConsole();
+            printScore();
             cardArea.drawArea();
             System.out.println();
             validSet = null;
@@ -88,7 +85,9 @@ public class Memory {
                 System.out.print("Player " + player.getName() + ", Choose a card: ");
                 choice = scanner.nextLine();
                 validSet = cardArea.recordFlip(choice);
+                printScore();
                 cardArea.drawArea();
+                System.out.println();
             }
             card1 = new Card(cardArea.getCardArea(), validSet, choice);
 
@@ -98,16 +97,25 @@ public class Memory {
                 System.out.print("Choose another card: ");
                 choice2 = scanner.nextLine();
                 validSet = cardArea.recordFlip(choice2);
+                printScore();
 
-                try
+                if (validSet == null)
                 {
                     cardArea.drawArea();
                     System.out.println();
-                    Thread.sleep(2500);
                 }
-                catch(InterruptedException ex)
+                else
                 {
-                    Thread.currentThread().interrupt();
+                    try
+                    {
+                        cardArea.drawArea();
+                        System.out.println();
+                        Thread.sleep(2200);
+                    }
+                    catch(InterruptedException ex)
+                    {
+                        Thread.currentThread().interrupt();
+                    }
                 }
             }
             card2 = new Card(cardArea.getCardArea(), validSet, choice2);
@@ -116,8 +124,9 @@ public class Memory {
 
             if (isMatch)
             {
-                cardArea.drawArea();
                 player.incrementScore();
+                printScore();
+                cardArea.drawArea();
             }
             else
             {
@@ -125,6 +134,20 @@ public class Memory {
                 System.out.println();
             }
         }
+    }
+
+    public String winner()
+    {
+        Player winner = players[0];
+        if (players[1].getScore() > players[0].getScore())
+        {
+            winner = players[1];
+        }
+        else if (players[0].getScore() == players[1].getScore())
+        {
+            return "The game is a tie with " + players[0].getName() + " and " + players[1].getName() + " both having " + players[0].getScore() + " matches!";
+        }
+        return winner.getName() + " won the Memory game with " + winner.getScore() + " matches!";
     }
 
     public static void clearConsole() {

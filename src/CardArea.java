@@ -28,6 +28,11 @@ public class CardArea
         return cardArea;
     }
 
+    public int size()
+    {
+        return cardArea.length * cardArea[0].length;
+    }
+
     public boolean isEmpty()
     {
         for (String[] row: playArea)
@@ -108,7 +113,7 @@ public class CardArea
             }
             for (int col = 0; col < playArea[0].length; col++)
             {
-                if (playArea[row][col].length() == 1)
+                if (playArea[row][col].length() == 1 && isNum(row, col))
                 {
                     System.out.print(" ");
                 }
@@ -136,10 +141,6 @@ public class CardArea
             }
             for (int col = 0; col < cardArea[0].length; col++)
             {
-                if (cardArea[row][col].length() == 1)
-                {
-                    System.out.print(" ");
-                }
                 System.out.print(cardArea[row][col]);
                 if (col != cards - 1)
                 {
@@ -181,6 +182,18 @@ public class CardArea
             }
         }
         return set;
+    }
+
+    private boolean isNum(int row, int col)
+    {
+        for (String emoji : emojis)
+        {
+            if (playArea[row][col].equals(emoji))
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     private String[][] copyArr(String[][] array)
