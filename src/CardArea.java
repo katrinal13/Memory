@@ -28,11 +28,6 @@ public class CardArea
         return cardArea;
     }
 
-    public int size()
-    {
-        return cardArea.length * cardArea[0].length;
-    }
-
     public boolean isEmpty()
     {
         for (String[] row: playArea)
@@ -47,19 +42,6 @@ public class CardArea
         }
         return true;
     }
-
-//    public void makeMatches()
-//    {
-//        for (int[] arr : matchList)
-//        {
-//            System.out.print("[ ");
-//            for (int num : arr)
-//            {
-//                System.out.print(num + " ");
-//            }
-//            System.out.print("]");
-//        }
-//    }
 
     public void layoutCardArea()
     {
@@ -94,10 +76,6 @@ public class CardArea
         }
 
         playArea = copyArr(playArea);
-
-        drawArea();
-        System.out.println();
-        drawCArea();
     }
 
     public void drawArea()
@@ -118,30 +96,6 @@ public class CardArea
                     System.out.print(" ");
                 }
                 System.out.print(playArea[row][col]);
-                if (col != cards - 1)
-                {
-                    System.out.print("|");
-                }
-            }
-            System.out.println();
-            System.out.println(dashes);
-        }
-    }
-
-    public void drawCArea()
-    {
-        for (int row = 0; row < cardArea.length; row++)
-        {
-            String dashes = "";
-            int dashesAmt = cards * 3;
-
-            for (int i = 0; i < dashesAmt - 1; i++)
-            {
-                dashes += "-";
-            }
-            for (int col = 0; col < cardArea[0].length; col++)
-            {
-                System.out.print(cardArea[row][col]);
                 if (col != cards - 1)
                 {
                     System.out.print("|");

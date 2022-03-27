@@ -54,6 +54,8 @@ public class Memory {
             }
         }
 
+        clearConsole();
+        printScore();
         System.out.println();
         System.out.println(winner());
         System.out.println("Thanks for playing!");
@@ -110,7 +112,7 @@ public class Memory {
                     {
                         cardArea.drawArea();
                         System.out.println();
-                        Thread.sleep(2200);
+                        Thread.sleep(1500);
                     }
                     catch(InterruptedException ex)
                     {
@@ -150,7 +152,8 @@ public class Memory {
         return winner.getName() + " won the Memory game with " + winner.getScore() + " matches!";
     }
 
-    public static void clearConsole() {
-        System.out.println(System.lineSeparator().repeat(50));
+    public static void clearConsole()
+    {
+        System.out.println(System.lineSeparator().repeat(2000));
     }
 }
