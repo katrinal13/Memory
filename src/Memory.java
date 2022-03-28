@@ -1,12 +1,35 @@
 import java.util.Scanner;
 
-public class Memory {
+/** This class represents a Memory object
+ *
+ * @author Katrina Lin
+ */
+public class Memory
+{
+    /** The players of the game */
     private Player[] players;
+
+    /** The cardArea object of CardArea */
     private CardArea cardArea;
+
+    /** The scanner object of Scanner */
     private Scanner scanner;
+
+    /** The first card being flipped */
     private Card card1;
+
+    /** The second card being flipped */
     private Card card2;
 
+    /** Instantiates a Memory object
+     *  <p>
+     *  Initializes the Scanner object
+     *  Initializes the players instance variable to two Player objects
+     *  Initializes both cards being flipped to null
+     *  Creates two players based on the user's input of each player's names
+     *  Creates a WinCondtion object, initializes cardArea, and lays out or creates
+     *  the matched pairs based on the user's choice of board size
+     */
     public Memory()
     {
         scanner = new Scanner(System.in);
@@ -38,6 +61,12 @@ public class Memory {
         cardArea.layoutCardArea();
     }
 
+    /** Runs the Memory game
+     *  <p>
+     *  While the board is not empty, each player takes turns.
+     *  After each player's turn, the board space will be checked.
+     *  If the board is empty, the game is over, the console is cleared, and the score and winner are displayed.
+     */
     public void run()
     {
         boolean gameOver = false;
@@ -61,6 +90,7 @@ public class Memory {
         System.out.println("Thanks for playing!");
     }
 
+    /** The score is displayed */
     public void printScore() {
         System.out.println("----------- SCORE BOARD -----------");
         System.out.println(players[0].getName() + ": " + players[0].getScore());
@@ -68,6 +98,19 @@ public class Memory {
         System.out.println();
     }
 
+    /** A player's turn is taken
+     *  <p>
+     *  Until the player's two flips are not a match or the board is empty,
+     *  the players turn will continue to run.
+     *  The players are presented with the current score board along with the board before each of their turns.
+     *  They will be asked for their choice of flip for two cards.
+     *  If both flips are valid, those cards will be flipped and tested to see if they are match.
+     *  If either or none of their flips are valid, they will be asked to flip a card until it is valid.
+     *  If their cards are a match, the current player's score will be incremented by 1
+     *  and they will be permitted to continue their turn until they fail to make a match.
+     *
+     *  @param player The Player object taking the turn
+     */
     public void takeTurn(Player player)
     {
         int[] validSet;
@@ -82,6 +125,7 @@ public class Memory {
             cardArea.drawArea();
             System.out.println();
             validSet = null;
+
             while (validSet == null)
             {
                 System.out.print("Player " + player.getName() + ", Choose a card: ");
@@ -138,6 +182,14 @@ public class Memory {
         }
     }
 
+    /** Returns a String that includes the win status of the game
+     *  <p>
+     *  If one player has a higher score than another, they are the winner and
+     *  their score and name will be returned.
+     *  If both players have the same score, an announced tie will be returned.
+     *
+     *  @return String representation of the win status
+     */
     public String winner()
     {
         Player winner = players[0];
@@ -152,6 +204,11 @@ public class Memory {
         return winner.getName() + " won the Memory game with " + winner.getScore() + " matches!";
     }
 
+    /** Clears the console
+     *  <p>
+     *  Creates several lines from the last printed statement in the console
+     *  in order to "clear" it.
+     */
     public static void clearConsole()
     {
         System.out.println(System.lineSeparator().repeat(2000));
