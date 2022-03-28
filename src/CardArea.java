@@ -16,7 +16,6 @@ public class CardArea
         cardArea = new String[cards][cards];
         playArea = new String[cards][cards];
         this.matchList = matchList;
-        //makeMatches();
 
         emojis = new String[] {"\uD83C\uDFC1", "\uD83D\uDCA0", "\uD83D\uDE47", "\uD83D\uDE4B", "\uD83D\uDC81", "\uD83E\uDD38", "\uD83C\uDF54", "\uD83D\uDCDD", "\uD83D\uDCC7", "\uD83D\uDD87", "\uD83D\uDCCC", "\uD83D\uDDD1", "\uD83E\uDDEC",
                 "\uD83E\uDDFC", "\uD83E\uDDFA", "\uD83E\uDDE6", "\uD83D\uDECD", "\uD83E\uDDE2", "\uD83E\uDDF6", "\uD83D\uDD2E", "\uD83E\uDE80", "\uD83C\uDFA3", "\uD83C\uDFC0", "\uD83C\uDF9F", "\u2614", "\u26C8",
